@@ -1,7 +1,11 @@
 
+import { Form } from "../components";
+
 function Home() {
     return(
-        <p>Home page</p>
+        <>
+            <Form/>
+        </>
     );
 }
 
