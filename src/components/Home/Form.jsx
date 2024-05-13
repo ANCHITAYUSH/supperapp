@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Form(){
 
@@ -18,6 +19,8 @@ function Form(){
         confirm: ""
     });
 
+    const navigate = useNavigate();
+
     function validatePhone(phone){
         const phoneRegex = /^[0-9]{10}$/;
         return phoneRegex.test(phone);
@@ -25,6 +28,7 @@ function Form(){
 
     function validate(){
 
+        let isError = false;
         setError((error) => {
             return{
                 name: "",
@@ -38,6 +42,7 @@ function Form(){
         if(data.name.trim().length === 0){
             console.warn("Name is required!");
             setError({...error, name: "Name is required!"});
+            isError = true;
         }
 
         if(data.username.trim().length === 0){
@@ -45,6 +50,7 @@ function Form(){
             setError(
                 (error) => {return {...error, username: "Username is required!"}}
             );
+            isError = true;
         }
 
         if(data.email.trim().length === 0){
@@ -52,6 +58,7 @@ function Form(){
             setError(
                 (error) => {return {...error, email: "Email is required!"}}
             );
+            isError = true;
         }
 
         if(data.phone.trim().length === 0 || !validatePhone(data.phone)){
@@ -59,6 +66,7 @@ function Form(){
             setError(
                 (error) => {return {...error, phone: "Mobile number is empty or invalid!"}}
             );
+            isError = true;
         }
 
         if(!data.confirm){
@@ -66,6 +74,11 @@ function Form(){
             setError(
                 (error) => {return {...error, confirm: "Confirmation required!"}}
             );
+            isError = true;
+        }
+
+        if(!isError){
+            navigate("/movies");
         }
     }
 
